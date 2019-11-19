@@ -20,7 +20,7 @@ UI.prototype.addBook = (book) => {
         <td>${book.title}</td>
         <td>${book.author}</td>
         <td>${book.isbn}</td>
-        <td><a class='delete' style="color: black;">X</a></td>
+        <td><a class='delete pointer' style="color: black;">X</a></td>
     `;
 
     list.appendChild(tableRow);
@@ -81,4 +81,16 @@ document.getElementById('book-form').addEventListener('submit', (event) => {
         ui.clearFields();
     }
 
+});
+
+//Remember, Event Delegation needs to be performed for dynamic entries in the UI
+document.getElementById('book-list').addEventListener('click', (event) => {
+    event.preventDefault();
+    if (event.target.className === 'delete pointer') {
+        if (confirm('Are you sure you want to remove this book?')) {
+            event.target.parentElement.parentElement.remove();
+            const ui = new UI();
+            ui.showAlert('Book successfully removed', 'warning');
+        }
+    }
 });
